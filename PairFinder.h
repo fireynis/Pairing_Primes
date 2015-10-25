@@ -6,6 +6,7 @@
 #define PAIRING_PRIMES_PAIRFINDER_H
 
 #include <sstream>
+#include <stdlib.h>
 
 using namespace std;
 
@@ -46,13 +47,39 @@ public:
                 stringstream st;
                 st << j;
                 test += " "+st.str();
-                if (test.length() > 71) {
+                if (test.length() > 90) {
                     cout << line << endl;
                     line = st.str();
                 } else {
                     line += " "+st.str();
                 }
                 test = line;
+            }
+        }
+        cout << line << endl;
+        line = "";
+        test = line;
+
+        int lineCount = 0;
+
+        for (int i = 0; i < n; ++i) {
+            if (!primes[i]) {
+                for (int j = i; j < n; ++j) {
+                    if (!primes[j]) {
+                        if (j - i == 2) {
+                            stringstream pair;
+                            pair << "(" << i << ", " << j << ")";
+                            test += pair.str();
+                            if (test.length() >= 90) {
+                                cout << line << endl;
+                                line = pair.str()+", ";
+                                test = line;
+                            } else {
+                                line += pair.str()+", ";
+                            }
+                        }
+                    }
+                }
             }
         }
         cout << line << endl;
